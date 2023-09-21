@@ -11,7 +11,6 @@ public class MyFiles {
 	private static final int SPACES_PER_LEVEL = 2;
 
 	public static void displayDir(String path, int maxDepth) throws IOException {
-		// TODO
 		// Throwing IllegalArgumentException in the case the given is not a directory
 		// Printing out the directory content using appropriate offsets showing which
 		// node belong to which directory
