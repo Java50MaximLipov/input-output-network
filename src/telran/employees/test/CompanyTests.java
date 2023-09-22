@@ -2,6 +2,8 @@ package telran.employees.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.*;
 import telran.employees.dto.*;
 import telran.employees.service.*;
@@ -9,21 +11,21 @@ import telran.employees.service.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CompanyTests {
 	private static final long ID1 = 123;
-	private static final String DEP1 = "dep1";
-	private static final int SALARY1 = 10000;
-	private static final int YEAR1 = 2000;
-	private static final LocalDate DATE1 = LocalDate.ofYearDay(YEAR1, 100);
 	private static final long ID2 = 124;
 	private static final long ID3 = 125;
 	private static final long ID4 = 126;
 	private static final long ID5 = 127;
+	private static final String DEP1 = "dep1";
 	private static final String DEP2 = "dep2";
 	private static final String DEP3 = "dep3";
+	private static final int SALARY1 = 10000;
 	private static final int SALARY2 = 5000;
 	private static final int SALARY3 = 15000;
+	private static final int YEAR1 = 2000;
 	private static final int YEAR2 = 1990;
-	private static final LocalDate DATE2 = LocalDate.ofYearDay(YEAR2, 100);
 	private static final int YEAR3 = 2003;
+	private static final LocalDate DATE1 = LocalDate.ofYearDay(YEAR1, 100);
+	private static final LocalDate DATE2 = LocalDate.ofYearDay(YEAR2, 100);
 	private static final LocalDate DATE3 = LocalDate.ofYearDay(YEAR3, 100);
 	private static final long ID_NOT_EXIST = 10000000;
 	private static final String TEST_DATA = "test.data";
@@ -55,7 +57,9 @@ class CompanyTests {
 		assertNull(company.removeEmployee(ID_NOT_EXIST));
 		assertEquals(empl1, company.removeEmployee(ID1));
 		Employee[] expected = { empl2, empl3, empl4, empl5 };
-		assertArrayEquals(expected, company.getEmployees().toArray(Employee[]::new));
+		Employee[] actual = company.getEmployees().toArray(Employee[]::new);
+		Arrays.sort(actual, (e1, e2) -> Long.compare(e1.id(), e2.id()));
+		assertArrayEquals(expected, actual);
 	}
 
 	@Test
@@ -66,7 +70,9 @@ class CompanyTests {
 
 	@Test
 	void testGetEmployees() {
-		assertArrayEquals(employees, company.getEmployees().toArray(Employee[]::new));
+		Employee[] actual = company.getEmployees().toArray(Employee[]::new);
+		Arrays.sort(actual, (e1, e2) -> Long.compare(e1.id(), e2.id()));
+		assertArrayEquals(employees, actual);
 	}
 
 	@Test
@@ -74,7 +80,9 @@ class CompanyTests {
 	void testRestore() {
 		Company newCompany = new CompanyImpl();
 		newCompany.restore(TEST_DATA);
-		assertArrayEquals(employees, newCompany.getEmployees().toArray(Employee[]::new));
+		Employee[] actual = newCompany.getEmployees().toArray(Employee[]::new);
+		Arrays.sort(actual, (e1, e2) -> Long.compare(e1.id(), e2.id()));
+		assertArrayEquals(employees, actual);
 	}
 
 	@Test
