@@ -3,6 +3,7 @@ package telran.employees.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
@@ -127,7 +128,6 @@ class CompanyTests {
 		List<Employee> employees = company.getEmployeesByDepartment(department);
 		employees.sort((e1, e2) -> Long.compare(e1.id(), e2.id()));
 		assertArrayEquals(expected, employees.toArray(Employee[]::new));
-
 	}
 
 	private void runGetBySalaryTest(int salaryFrom, int salaryTo, Employee[] expected) {
@@ -151,7 +151,7 @@ class CompanyTests {
 
 	@Test
 	void testGetEmployeesByAge() {
-		runGetByAgeTest(23, 35, new Employee[] { empl1, empl2, empl3, empl4 });
+		runGetByAgeTest(getAge(DATE1), getAge(DATE2) + 1, new Employee[] { empl1, empl2, empl3, empl4 });
 		runGetByAgeTest(75, 80, new Employee[] {});
 	}
 
@@ -167,6 +167,10 @@ class CompanyTests {
 		company.updateDepartment(ID5, DEP1);
 		runGetByDepartmentTest(DEP1, new Employee[] { empl1, empl3, empl5 });
 		runGetByDepartmentTest(DEP3, new Employee[0]);
+	}
+
+	private int getAge(LocalDate birthDate) {
+		return (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now());
 	}
 
 }

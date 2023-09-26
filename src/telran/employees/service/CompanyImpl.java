@@ -1,7 +1,6 @@
 package telran.employees.service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ import telran.employees.dto.SalaryDistribution;
 
 public class CompanyImpl implements Company {
 	HashMap<Long, Employee> employees = new HashMap<>(); // most effective structure for the interface methods
-	TreeMap<Integer, List<Employee>> employeesAge = new TreeMap<>();
+	TreeMap<LocalDate, List<Employee>> employeesDate = new TreeMap<>();
 	TreeMap<Integer, List<Employee>> employeesSalary = new TreeMap<>();
 	HashMap<String, List<Employee>> employeesDepartment = new HashMap<>();
 
@@ -19,10 +18,10 @@ public class CompanyImpl implements Company {
 	public boolean addEmployee(Employee empl) {
 		boolean res = employees.putIfAbsent(empl.id(), empl) == null;
 		if (res) {
-			Integer age = getAge(empl.birthDate());
+			LocalDate date = empl.birthDate();
 			Integer salary = empl.salary();
 			String department = empl.department();
-			addToIndex(empl, age, employeesAge);
+			addToIndex(empl, date, employeesDate);
 			addToIndex(empl, salary, employeesSalary);
 			addToIndex(empl, department, employeesDepartment);
 		}
@@ -37,10 +36,10 @@ public class CompanyImpl implements Company {
 	public Employee removeEmployee(long id) {
 		Employee empl = employees.remove(id);
 		if (empl != null) {
-			Integer age = getAge(empl.birthDate());
+			LocalDate date = empl.birthDate();
 			Integer salary = empl.salary();
 			String department = empl.department();
-			removeFromIndex(empl, age, employeesAge);
+			removeFromIndex(empl, date, employeesDate);
 			removeFromIndex(empl, salary, employeesSalary);
 			removeFromIndex(empl, department, employeesDepartment);
 		}
@@ -99,11 +98,14 @@ public class CompanyImpl implements Company {
 
 	@Override
 	public List<Employee> getEmployeesByAge(int ageFrom, int ageTo) {
-		return employeesAge.subMap(ageFrom, ageTo).values().stream().flatMap(List::stream).toList();
+		LocalDate dateFrom = getDate(ageTo);
+		LocalDate dateTo = getDate(ageFrom);
+		return employeesDate.subMap(dateFrom, dateTo).values().stream().flatMap(List::stream).toList();
 	}
 
-	private int getAge(LocalDate birthDate) {
-		return (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now());
+	private LocalDate getDate(int age) {
+		LocalDate currentDate = LocalDate.now();
+		return currentDate.minusYears(age);
 	}
 
 	@Override
@@ -125,5 +127,4 @@ public class CompanyImpl implements Company {
 		}
 		return empl;
 	}
-
 }
