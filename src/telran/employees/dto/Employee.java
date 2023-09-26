@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public record Employee(long id, String name, String department, int salary, LocalDate birthDate)
 		implements Serializable {
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -22,4 +23,5 @@ public record Employee(long id, String name, String department, int salary, Loca
 		Employee other = (Employee) obj;
 		return id == other.id;
 	}
+
 }

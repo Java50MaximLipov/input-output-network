@@ -2,6 +2,7 @@ package telran.employees.service;
 
 import java.nio.file.*;
 import java.util.List;
+
 import telran.employees.dto.*;
 import java.io.*;
 
@@ -45,4 +46,19 @@ public interface Company {
 			throw new RuntimeException(e.toString());
 		}
 	}
+
+//method of CW/HW #34
+	List<DepartmentSalary> getDepartmentSalaryDistribution();
+
+	List<SalaryDistribution> getSalaryDistribution(int interval);
+
+	List<Employee> getEmployeesByDepartment(String department);
+
+	List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo);
+
+	List<Employee> getEmployeesByAge(int ageFrom, int ageTo);
+
+	Employee updateSalary(long id, int newSalary);
+
+	Employee updateDepartment(long id, String department);
 }
