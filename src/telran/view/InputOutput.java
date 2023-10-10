@@ -43,8 +43,16 @@ public interface InputOutput {
 	}
 
 	default Integer readInt(String prompt, String errorPrompt, int min, int max) {
-		// TODO
-		return null;
+		return readObject(String.format("%s[%d - %d] ", prompt, min, max), errorPrompt, string -> {
+			int res = Integer.parseInt(string);
+			if (res < min) {
+				throw new IllegalArgumentException("must be not less than " + min);
+			}
+			if (res > max) {
+				throw new IllegalArgumentException("must be not greater than " + max);
+			}
+			return res;
+		});
 	}
 
 	default Long readLong(String prompt, String errorPrompt) {
@@ -52,22 +60,33 @@ public interface InputOutput {
 	}
 
 	default Long readLong(String prompt, String errorPrompt, long min, long max) {
-		// TODO
-		return null;
+		return readObject(String.format("%s[%d - %d] ", prompt, min, max), errorPrompt, string -> {
+			long res = Long.parseLong(string);
+			if (res < min) {
+				throw new IllegalArgumentException("must be not less than " + min);
+			}
+			if (res > max) {
+				throw new IllegalArgumentException("must be not greater than " + max);
+			}
+			return res;
+		});
 	}
 
 	default Double readDouble(String prompt, String errorPrompt) {
 		return readObject(prompt, errorPrompt, Double::parseDouble);
 	}
 
-	default String readString(String prompt, String errorPrompt, Predicate<String> pattern) {
-		// TODO
-		return null;
+	default String readString(String prompt, String errorPrompt, Predicate<String> predicate) {
+		return readObject(prompt, errorPrompt, string -> {
+			if (!predicate.test(string)) {
+				throw new IllegalArgumentException("");
+			}
+			return string;
+		});
 	}
 
 	default String readString(String prompt, String errorPrompt, HashSet<String> options) {
-		// TODO
-		return null;
+		return readString(prompt, errorPrompt, options::contains);
 	}
 
 	default LocalDate readIsoDate(String prompt, String errorPrompt) {
@@ -75,8 +94,14 @@ public interface InputOutput {
 	}
 
 	default LocalDate readIsoDate(String prompt, String errorPrompt, LocalDate min, LocalDate max) {
-		// TODO
-		return null;
+		return readObject(prompt, errorPrompt, string -> {
+			LocalDate res = LocalDate.parse(string);
+			if (res.isBefore(min) || res.isAfter(max)) {
+				throw new IllegalArgumentException(
+						String.format("Date should be in the range from %s to %s", min, max));
+			}
+			return res;
+		});
 	}
 
 }
