@@ -39,8 +39,9 @@ class InputOutputTest {
 	}
 
 	@Test
-	@Disabled
+	// @Disabled
 	void testReadEmployeeBySeparateField() {
+
 		// id in range [100000-999999]
 		// name - more than two letters where first one is a capital
 		// birthDate - any localdate in range [1950-12-31 - 2003-12-31
@@ -58,6 +59,7 @@ class InputOutputTest {
 	}
 
 	@Test
+
 	void testSimpleArithmeticCalculator() {
 		HashSet<String> operations = new HashSet<>(List.of("+", "-", "*", "/"));
 		double op1 = io.readDouble("Enter first number", "Wrong number");

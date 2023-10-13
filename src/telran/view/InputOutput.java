@@ -61,6 +61,7 @@ public interface InputOutput {
 
 	default Long readLong(String prompt, String errorPrompt, long min, long max) {
 		return readObject(String.format("%s[%d - %d] ", prompt, min, max), errorPrompt, string -> {
+
 			long res = Long.parseLong(string);
 			if (res < min) {
 				throw new IllegalArgumentException("must be not less than " + min);
@@ -69,6 +70,7 @@ public interface InputOutput {
 				throw new IllegalArgumentException("must be not greater than " + max);
 			}
 			return res;
+
 		});
 	}
 
@@ -97,8 +99,7 @@ public interface InputOutput {
 		return readObject(prompt, errorPrompt, string -> {
 			LocalDate res = LocalDate.parse(string);
 			if (res.isBefore(min) || res.isAfter(max)) {
-				throw new IllegalArgumentException(
-						String.format("Date should be in the range from %s to %s", min, max));
+				throw new IllegalArgumentException(String.format("Date must be in the range from %s to %s", min, max));
 			}
 			return res;
 		});
