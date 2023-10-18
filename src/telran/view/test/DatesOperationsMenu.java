@@ -21,6 +21,7 @@ public class DatesOperationsMenu {
 	}
 
 	static private void dateAfter(InputOutput io, boolean isSubtract) {
+
 		LocalDate date = io.readIsoDate("Enter date in ISO format ", "Wrong Date ");
 		int days = io.readInt("Enter number of days", "Wrong number of days", 1, Integer.MAX_VALUE);
 		if (isSubtract) {

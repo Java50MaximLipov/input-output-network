@@ -10,7 +10,7 @@ public class NumbersDatesOperations {
 	}
 
 	private static Item[] getItems() {
-		Item items[] = { NumbersOperationsMenu.getOperationsItem("Number Operations"),
+		Item items[] = { NumbersOperationsMenu.getNumberOperationsItem("Number Operations"),
 				DatesOperationsMenu.getDateOperationsItem("Date Operations"), Item.exit() };
 		return items;
 	}
