@@ -1,30 +1,21 @@
 package telran.employees.controller;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import telran.employees.dto.DepartmentSalary;
 import telran.employees.dto.Employee;
-import telran.employees.dto.SalaryDistribution;
 import telran.employees.service.Company;
 import telran.view.InputOutput;
 import telran.view.Item;
 
 public class CompanyController {
-	private static final long MIN_ID = 100000;
-	private static final long MAX_ID = 999999;
+	private static final long MIN_ID = 100_000;
+	private static final long MAX_ID = 999_999;
 	private static final String[] DEPARTMENTS = { "QA", "Development", "Audit", "Accounting", "Management" };
-	private static final int MIN_SALARY = 7000;
-	private static final int MAX_SALARY = 50000;
+	private static final int MIN_SALARY = 7_000;
+	private static final int MAX_SALARY = 50_000;
 	private static final int MIN_INTERVAL = 500;
-	private static final int MAX_INTERVAL = 5000;
+	private static final int MAX_INTERVAL = 5_000;
 	private static final int MIN_AGE = 20;
 	private static final int MAX_AGE = 75;
 	private static Company company;
@@ -37,7 +28,6 @@ public class CompanyController {
 	}
 
 	private static List<Item> getItemsList() {
-
 		return List.of(Item.of("Hire new Employee", CompanyController::addEmployee),
 				Item.of("Fire  Employee", CompanyController::removeEmployee),
 				Item.of("Display data of Employee", CompanyController::getEmployee),
@@ -65,14 +55,12 @@ public class CompanyController {
 
 	static void removeEmployee(InputOutput io) {
 		Long id = getId(io, true);
-
 		io.writeObject("Removed employee is ");
 		io.writeObjectLine(company.removeEmployee(id));
 	}
 
 	static void getEmployee(InputOutput io) {
 		Long id = getId(io, true);
-
 		io.writeObject("employee is ");
 		io.writeObjectLine(company.getEmployee(id));
 	}
@@ -108,7 +96,6 @@ public class CompanyController {
 
 	static void updateSalary(InputOutput io) {
 		Long id = getId(io, true);
-
 		int salary = getSalary(io);
 		Employee empl = company.updateSalary(id, salary);
 		io.writeLine(String.format("old salary value %d of employee %d" + " has been updated with new value %d",
@@ -117,7 +104,6 @@ public class CompanyController {
 
 	static void updateDepartment(InputOutput io) {
 		Long id = getId(io, true);
-
 		String department = getDepartment(io);
 		Employee empl = company.updateDepartment(id, department);
 		io.writeLine(String.format("old deprtment %s of employee %d" + " has been updated with department %s",
@@ -127,7 +113,6 @@ public class CompanyController {
 	static private Long getId(InputOutput io, boolean isExists) {
 		Long id = io.readLong("Enter Employee identity", "Wrong identity value", MIN_ID, MAX_ID);
 		Employee empl = company.getEmployee(id);
-
 		String exceptionText = "";
 		Long res = (empl != null && isExists) || (empl == null && !isExists) ? id : null;
 		if (res == null) {
@@ -138,7 +123,6 @@ public class CompanyController {
 			throw new RuntimeException(exceptionText);
 		}
 		return res;
-
 	}
 
 	static private <T> void displayResult(List<T> list, InputOutput io) {
@@ -166,7 +150,6 @@ public class CompanyController {
 	}
 
 	private static LocalDate getBirthdate(int age) {
-
 		return LocalDate.now().minusYears(age);
 	}
 
