@@ -11,7 +11,6 @@ public interface Item {
 
 	static Item of(String name, Consumer<InputOutput> consumer, boolean isExit) {
 		return new Item() {
-
 			@Override
 			public void perform(InputOutput io) {
 				consumer.accept(io);

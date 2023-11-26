@@ -39,7 +39,6 @@ class CompanyTests {
 	Employee empl5 = new Employee(ID5, "name", DEP3, SALARY3, DATE3);
 	Employee[] employees = { empl1, empl2, empl3, empl4, empl5 };
 	Company company;
-
 	final static String TEST_FILE_NAME = "test.data";
 
 	@BeforeEach

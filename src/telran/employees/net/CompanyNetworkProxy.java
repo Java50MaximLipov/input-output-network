@@ -12,6 +12,7 @@ import telran.net.NetworkHandler;
 
 public class CompanyNetworkProxy implements Company {
 	private NetworkHandler networkHandler;
+
 	public CompanyNetworkProxy(NetworkHandler networkHandler) {
 		this.networkHandler = networkHandler;
 	}

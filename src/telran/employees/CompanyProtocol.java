@@ -89,7 +89,6 @@ public class CompanyProtocol implements ApplProtocol {
 	}
 
 	private Serializable employees_all(Serializable requestData) {
-
 		return new ArrayList<>(company.getEmployees());
 	}
 

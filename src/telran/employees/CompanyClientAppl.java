@@ -10,7 +10,6 @@ import telran.net.TcpClientHandler;
 import telran.view.*;
 
 public class CompanyClientAppl {
-
 	private static final String HOST = "localhost";
 	private static final int PORT = 5000;
 
@@ -29,6 +28,7 @@ public class CompanyClientAppl {
 			}, true));
 			Menu menu = new Menu("Company Application", items);
 			menu.perform(io);
+
 		} catch (Exception e) {
 			io.writeLine(e.getMessage());
 		}

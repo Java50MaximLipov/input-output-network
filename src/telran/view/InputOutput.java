@@ -31,6 +31,7 @@ public interface InputOutput {
 			String string = readString(prompt);
 			try {
 				res = mapper.apply(string);
+
 			} catch (RuntimeException e) {
 				writeLine(errorPrompt + ": " + e.getMessage());
 				running = true;

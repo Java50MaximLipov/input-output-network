@@ -21,6 +21,7 @@ public class CompanyImpl implements Company {
 
 	@Override
 	public boolean addEmployee(Employee empl) {
+
 		try {
 			writeLock.lock();
 			boolean res = employees.putIfAbsent(empl.id(), empl) == null;

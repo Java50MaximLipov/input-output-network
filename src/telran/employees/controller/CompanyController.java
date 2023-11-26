@@ -28,6 +28,7 @@ public class CompanyController {
 	private static final int MIN_AGE = 20;
 	private static final int MAX_AGE = 75;
 	private static Company company;
+
 	public static ArrayList<Item> getItems(Company company) {
 		CompanyController.company = company;
 		List<Item> itemsList = getItemsList();
@@ -121,6 +122,7 @@ public class CompanyController {
 	static private Long getId(InputOutput io, boolean isExists) {
 		Long id = io.readLong("Enter Employee identity", "Wrong identity value", MIN_ID, MAX_ID);
 		Employee empl = company.getEmployee(id);
+
 		String exceptionText = "";
 		Long res = (empl != null && isExists) || (empl == null && !isExists) ? id : null;
 		if (res == null) {
