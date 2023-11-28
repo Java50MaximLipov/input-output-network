@@ -45,8 +45,8 @@ public class TcpClientHandler implements Closeable, NetworkHandler {
 			}
 			do {
 				running = false;
-				writer.writeObject(request);
 				try {
+					writer.writeObject(request);
 					response = (Response) reader.readObject();
 				} catch (SocketException e) {
 					connect();
